@@ -51,31 +51,31 @@ def searchByLength(): #function that returns how long a movie is
              print(round(int(runtime)/60,2), 'hours')
 
 def searchByPlatform(): #function that returns what platform your movie is on
-    movieplatform = input('Where is your movie available? Type the movie name in. ')
+    movieplatform = input('Where is your movie available? Type in the movie name. ')
     csv_file = csv.reader(open('/Users/isoleilmontalvo/Downloads/StreamingMoviesKaggle.csv', 'r'))
     csv_file_iter = iter(csv_file);
     next(csv_file_iter)
     for row in csv_file:
         title, year, age, imdb, rotten, netflix, hulu, prime, disney, directors, genres, \
         country, language, runtime = row
-        ava = 'This movie is available on '
+        ava = 'This movie is available on'
+        counter = []
         if movieplatform.lower() == title.lower():
             if float(netflix)==1:
-                ava += 'Netflix'
-            if float(hulu)==1 and float(netflix)==1:
-                ava += ' and Hulu'
-            if float(hulu)==1 and float(netflix)!=1:
-                ava += 'Hulu'
-            if float(prime)==1 and (float(hulu)==1 or float(netflix)==1):
-                ava += ' and Prime Video'
-            if float(prime)==1 and (float(hulu)!=1 and float(netflix)!=1):
-                ava+= 'Prime Video'
-            if float(disney)==1 and (float(hulu)==1 or float(netflix)==1 or float(prime)==1):
-                ava += ' and Disney+'
-            if float(disney)==1 and (float(hulu)!=1 and float(netflix)!=1 and float(prime)!=1):
-                ava +='Disney+'
-
-            print(ava)
+                counter.append('Netflix')
+            if float(hulu)==1:
+                counter.append('Hulu')
+            if float(prime)==1:
+                counter.append('Prime Video')
+            if float(disney)==1:
+                counter.append('Disney+')
+            #print(len(counter))
+            if len(counter) > 1:
+                counter[-1] = 'and '+ counter[-1]
+            if len(counter)<=2:
+                print(ava," ".join(counter))
+            else:
+                print(ava,", ".join(counter))
 
 
 if __name__ == "__main__":
